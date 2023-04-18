@@ -76,16 +76,10 @@ public class ScheduleTask {
             scheduledFutureMap = new HashMap<>();
         }
 
-        if(scheduledFutureMap.get(jobCode) != null){
-            ScheduledFuture<?> tempFuture = scheduledFutureMap.get(jobCode);
-            tempFuture = taskScheduler.schedule(() -> myScheduledMethod(jobCode),
+        ScheduledFuture<?> tempFuture = taskScheduler.schedule(() -> myScheduledMethod(jobCode),
                 createCronTrigger(cronPattern));
-            scheduledFutureMap.put(jobCode, tempFuture);      
-        }else{
-            ScheduledFuture<?> tempFuture = taskScheduler.schedule(() -> myScheduledMethod(jobCode),
-                createCronTrigger(cronPattern));
-            scheduledFutureMap.put(jobCode, tempFuture);    
-        }
+        scheduledFutureMap.put(jobCode, tempFuture);    
+        
 
         System.out.println(String.format("Reschedule() finished for jobCode:%s and pattern:%s", jobCode, cronPattern));        
     }
